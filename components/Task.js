@@ -6,12 +6,18 @@ import DeleteTaskSvg from "../assets/logos/DeleteTaskSvg";
 
 const Task = (props) => {
     const [modalActive, setModalVisible] = useState(false);
+    const [subTask, subTaskHandler] = useState([]);
+    const [completedTaskCount, taskCountHandler] = useState(0);
+
+    taskCounter = () => {
+        taskCountHandler(completedTaskCount + 1)
+    }
 
 
     return (
         <View style={styles.item}>
             <View style={styles.itemLeft}>
-                <View style={styles.square}></View>
+                <Text>{subTask.length ? `${completedTaskCount}/${subTask.length}` : 'No subtasks'}</Text>
             </View>
             <Text style={styles.itemText}>{props.text}</Text>
             <TouchableOpacity
@@ -29,7 +35,7 @@ const Task = (props) => {
                 visible={modalActive}
                 onRequestClose={() => setModalVisible(!modalActive)}>
                     <View>
-                        <SubTask taskTitle={props.text}/>
+                        <SubTask taskTitle={props.text} subTask={subTask} subTaskHandler={subTaskHandler} taskCountHandler={taskCounter}/>
                     </View>
                 </Modal>
             </View>
